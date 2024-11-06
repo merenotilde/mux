@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Apply - m(ux){% endblock %}
+
+{% block content %}
+<div class="svg-overlay-container">
+    <img src="{{ url_for('static', filename='assets/pagetemplate.svg') }}" alt="m(ux) logo" class="responsive-logo">
+    <img src="{{ url_for('static', filename='assets/arrowsv.svg') }}" alt="Arrows" class="overlay-arrows">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-message">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+{% endwith %}
+
+
+    <div class="form-overlay">
+        <h1 class="text-4xl font-bold mb-6">Join m(ux)</h1>
+        <p class="mb-4">We are looking for DJs and volunteers. If you're interested in joining m(ux), please fill out the application form below:</p>
+        <form action="/submit" method="post" class="space-y-4">
+            <div>
+                <label for="name" class="block font-semibold">Name</label>
+                <input type="text" id="name" name="name" required class="input-field">
+            </div>
+            <div>
+                <label for="email" class="block font-semibold">Email</label>
+                <input type="email" id="email" name="email" required class="input-field">
+            </div>
+            <div>
+                <label for="message" class="block font-semibold">Message</label>
+                <textarea id="message" name="message" rows="4" class="input-field"></textarea>
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+        
+{% endblock %}

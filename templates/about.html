@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}About - m(ux){% endblock %}
+
+{% block content %}
+<div class="svg-overlay-container">
+    <img src="{{ url_for('static', filename='assets/pagetemplate.svg') }}" alt="m(ux) logo" class="responsive-logo">
+    <img src="{{ url_for('static', filename='assets/arrowsv.svg') }}" alt="Arrows" class="overlay-arrows">
+
+    <div class="form-overlay">
+<h1 class="text-4xl font-bold mb-6">About m(ux)</h1>
+<img src="{{ url_for('static', filename='assets/founders.png') }}" alt="Mission Statement" class="mb-4 w-full max-w-md mx-auto">
+<p class="mb-4">m(ux) is a music-centric event, intended as a safe haven where no genre or medium is left behind. Our goal is to let artists perform not only their iconic, smashing hits, but also their most personal, deep-in-the-vault favorites. Meet Boston’s first dedicated space for alt-electronic elements – anything and everything on the decks. <br><br>
+
+    Expect curated collectives of DJs, artists, and creators of all formats to have their expression felt and cherished. <br><br>
+    Anticipate discoveries of genres never before heard. <br><br>
+    Allow your soul to flow in any direction.
+    
+    </p>
+</div>
+{% endblock %}

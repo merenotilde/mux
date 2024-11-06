@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}m(ux){% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" defer rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="animated-pixels-background"></div>
+  
+    <!-- Main Content -->
+    <main class="container mx-auto flex-1 py-12 px-6" content>
+        {% block content %}{% endblock %}
+    </main>
+<div class="vertical-links">
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="https://ra.co/events/2023782"  target="_blank">Attend</a>
+        <li><a href="{{ url_for('apply') }}">Join</a></li>
+        <li><a href="https://www.instagram.com/mux_flow/"  target="_blank">Socials</a></li>
+    </ul>
+</div>
+
+    
+    <footer>
+        <div class="container mx-auto text-center">
+            <p class="text-[#b0cbdf]">&copy; Allow your soul to flow in any direction.</p>
+        </div>
+    </footer> 
+
+  
+ 
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+       
+</body>
+
+</html>
