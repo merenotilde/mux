@@ -8,14 +8,16 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # Database connection configuration
-DB_HOST = "52.91.34.166"
-DB_PORT = "5432"
-DB_NAME = "mux"
-DB_USER = "postgres"
-DB_PASSWORD = "9545"
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 # Configure SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

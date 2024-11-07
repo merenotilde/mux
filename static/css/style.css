@@ -178,34 +178,138 @@ footer {
     transform: translate(-50%, -150%);
     z-index: 1; /* Place it above the SVG */
 }
-
-@media (max-height: 935px) {
-    footer {
-        display: none;
-    }
+/* Default State - Mobile Navigation Hidden */
+.mobile-nav {
+    display: none;
 }
 
-@media (max-width: 815px) {
-    .responsive-logo {
-        display: none;
-    }
-    .overlay-arrows {
-        display: none;
-    }
-    .vertical-links {
-        position: fixed;
-        top: 5%;
-    }
-    .form-overlay {
-        background-color: white;
-        padding: 5%;
-        outline: 2px solid #ff4d9a; /* This should apply a pink outline */
-    }
 
+
+@media (max-width: 815px), (max-height: 900px) {
+    .responsive-logo,
+    .overlay-arrows,
     .animated-pixels-background div {
-        display:none;
+        display: none; /* Hide elements on mobile for a cleaner layout */
+    }
+
+        /* Custom Scrollbar Styling */
+    /* Firefox */
+    * {
+        scrollbar-width: thin; /* Thin scrollbar */
+        scrollbar-color: #ff4d9a #ffffff; /* Scrollbar thumb color and track color */
+    }
+
+    /* Chrome, Edge, Safari */
+    ::-webkit-scrollbar {
+        width: 8px; /* Adjust width as needed */
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #ffffff; /* Track color */
+        border-radius: 10px; /* Rounded corners for the track */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ff4d9a; /* Thumb color */
+        border-radius: 10px; /* Rounded corners for the thumb */
+        border: 2px solid #ffffff; /* Space around the thumb */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #9fedc9; /* Thumb color on hover */
+    }
+
+
+    .mobile-nav {
+        display: flex; /* Flex to align logo and links */
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    /* Logo Styling in Mobile Nav */
+    .mobile-logo {
+        height: 60px; /* Adjust logo height as needed */
+        margin-right: 1rem;
+    }
+
+    .mobile-nav ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem; /* Space between links */
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mobile-nav li {
+        margin: 0.5rem 0;
+    }
+
+    .mobile-nav a {
+        font-size: 1rem;
+        color: #ff4d9a;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .mobile-nav a:hover {
+        color: #9fedc9;
+    }
+
+    /* .poster adjustments */
+    .poster {
+        width: 90vw;
+        max-height: 70vh;
+        overflow-y: auto;
+        margin: 10vh auto 0;
+        padding: 5%;
+    }
+
+    /* Form Overlay adjustments */
+    .form-overlay {
+        background-color: #ffffff;
+        padding: 3%;
+        outline: 2px solid #ff4d9a;
+        width: 90vw;
+        max-height: 70vh;
+        overflow-y: auto;
+        margin: 10vh auto 0;
+    }
+
+    /* Compact text and inputs within form */
+    .form-overlay h1,
+    .poster h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-overlay p,
+    .poster p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .input-field {
+        padding: 0.4rem;
+        font-size: 1rem;
+    }
+
+    .submit-button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
     }
 }
+
+
 .poster {
     max-width: 90vw;
     width: auto;
