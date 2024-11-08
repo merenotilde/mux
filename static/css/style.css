@@ -41,43 +41,30 @@ a:hover {
     margin: 0 auto;
 }
 
-footer {
-    position: fixed;
-    bottom: calc(50% - 480px);
-    left: 0;
-    width: 100%;
-    padding: 1rem 0;
-    z-index: 1;
-}
-
-
-
-/* Vertical Links */
+/* Horizontal Rotated Links */
 .vertical-links {
-    position: fixed;
-    top: calc(50% - 420px);
-    left: 50%;
-    transform: translate(-50%, -150%);
-    z-index: 1;
-}
-
-.vertical-links ul {
+    position: absolute;
+    top:  calc(50% - 48px);
+    left: calc(50% + 365px);
+    transform: translateY(-150%);
     display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    flex-direction: column;
+    gap: 1.2rem;
 }
 
+/* Styling for individual links */
 .vertical-links a {
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
     color: #ff4d9a;
     text-decoration: none;
     transition: color 0.2s;
+    writing-mode: vertical-rl; 
+    transform: rotate(0deg);
 }
 
+/* Hover Effect */
 .vertical-links a:hover {
-    color: #9fedc9;
+    color:#9fedc9;
 }
 
 /* Overlay Containers */
@@ -138,61 +125,36 @@ footer {
 .animated-pixels-background div:nth-child(4) { top: 70%; left: 40%; animation-delay: 3s; }
 .animated-pixels-background div:nth-child(5) { top: 85%; left: 15%; animation-delay: 4s; }
 
-/* Input Field Styling */
-.input-field {
-    width: 100%;
-    border: 2px solid #b0cbdf;
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    color: #9fedc9;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    resize: none;
-}
-
-.input-field:focus {
-    border-color: #ff4d9a;
-    box-shadow: 0 0 5px rgba(255, 77, 154, 0.5);
-}
-
-.submit-button {
-    background-color: #ff4d9a;
-    color: #ffffff;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-}
-
-.submit-button:hover {
-    background-color: #b0cbdf;
-    color: #ffffff;
-}
-
 .overlay-arrows {
     position: absolute;
-    top: calc(50% + 450px); /* Adjust to match nav position */
+    top: calc(50% + 450px);
     left: calc(50% + 330px);
     transform: translate(-50%, -150%);
-    z-index: 1; /* Place it above the SVG */
+    z-index: 1; 
 }
-/* Default State - Mobile Navigation Hidden */
+
 .mobile-nav {
     display: none;
 }
 
-
-
-@media (max-width: 815px), (max-height: 900px) {
+.poster {
+    max-width: 90vw;
+    width: auto;
+    height: 850px;
+    display: block;
+    margin: 0 auto;
+    
+}
+ /* Mobile View */
+@media (max-width: 815px), (max-height: 850px) {
     .responsive-logo,
-    .overlay-arrows,
-    .animated-pixels-background div {
-        display: none; /* Hide elements on mobile for a cleaner layout */
+    .vertical-links,
+    .overlay-arrows
+      {
+        display: none; 
     }
 
-        /* Custom Scrollbar Styling */
+    /* Custom Scrollbar Styling */
     /* Firefox */
     * {
         scrollbar-width: thin; /* Thin scrollbar */
@@ -201,28 +163,28 @@ footer {
 
     /* Chrome, Edge, Safari */
     ::-webkit-scrollbar {
-        width: 8px; /* Adjust width as needed */
+        width: 8px;
         height: 8px;
     }
 
     ::-webkit-scrollbar-track {
-        background: #ffffff; /* Track color */
-        border-radius: 10px; /* Rounded corners for the track */
+        background: #ffffff;
+        border-radius: 10px; 
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #ff4d9a; /* Thumb color */
-        border-radius: 10px; /* Rounded corners for the thumb */
-        border: 2px solid #ffffff; /* Space around the thumb */
+        background-color: #ff4d9a; 
+        border-radius: 10px; 
+        border: 2px solid #ffffff; 
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background-color: #9fedc9; /* Thumb color on hover */
+        background-color: #9fedc9; 
     }
 
 
     .mobile-nav {
-        display: flex; /* Flex to align logo and links */
+        display: flex; 
         align-items: center;
         justify-content: space-between;
         position: fixed;
@@ -234,9 +196,8 @@ footer {
         z-index: 1000;
     }
 
-    /* Logo Styling in Mobile Nav */
     .mobile-logo {
-        height: 60px; /* Adjust logo height as needed */
+        height: 60px;
         margin-right: 1rem;
     }
 
@@ -244,7 +205,7 @@ footer {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 1rem; /* Space between links */
+        gap: 1rem; 
         list-style: none;
         padding: 0;
         margin: 0;
@@ -265,16 +226,13 @@ footer {
         color: #9fedc9;
     }
 
-    /* .poster adjustments */
     .poster {
-        width: 90vw;
         max-height: 70vh;
         overflow-y: auto;
-        margin: 10vh auto 0;
-        padding: 5%;
+        margin: -5px auto 0;
+      
     }
 
-    /* Form Overlay adjustments */
     .form-overlay {
         background-color: #ffffff;
         padding: 3%;
@@ -282,50 +240,7 @@ footer {
         width: 90vw;
         max-height: 70vh;
         overflow-y: auto;
-        margin: 10vh auto 0;
+        margin: 0vh auto 0;
     }
 
-    /* Compact text and inputs within form */
-    .form-overlay h1,
-    .poster h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .form-overlay p,
-    .poster p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-
-    .input-field {
-        padding: 0.4rem;
-        font-size: 1rem;
-    }
-
-    .submit-button {
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-    }
-}
-
-
-.poster {
-    max-width: 90vw;
-    width: auto;
-    height: 850px;
-    display: block;
-    margin: 0 auto;
-    
-}
-
-.flash-message {
-    position: absolute;
-    top: calc(50% + 350px); /* Adjust to match nav position */
-    left: calc(50%);
-    transform: translate(-50%, -150%);
-    z-index: 1; /* Place it above the SVG */
-    color:#ff4d9a;
-    font-weight: bold; 
-    text-align: center;
 }
