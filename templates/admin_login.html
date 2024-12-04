@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login - m(ux){% endblock %}
+
+{% block content %}
+<div class="svg-overlay-container">
+    <img src="{{ url_for('static', filename='assets/pagetemplate.svg') }}" alt="m(ux) logo" class="responsive-logo">
+    <img src="{{ url_for('static', filename='assets/arrowsv.svg') }}" alt="Arrows" class="overlay-arrows">
+    <div class="form-overlay">
+        <form method="POST">
+            <label for="password">Password</label>
+            <input class="input-field" type="password" id="password" name="password" required>
+            <button class="submit-button" type="submit">Login</button>
+        </form>
+
+    <!-- Flash Message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-message">
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

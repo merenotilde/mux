@@ -14,25 +14,122 @@
         </div>
     {% endif %}
 {% endwith %}
+<style>
+    /* Card Container Styling */
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1.3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
 
+/* Card Styling */
+.card {
+    background-color: #fff;
+    border: 2px solid #ff4d9a;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: #16c975;
+    flex: 1 1 calc(30% - 2rem); /* Ensures responsive sizing */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 300px;
+}
 
-    <div class="form-overlay">
-        <h1 class="text-4xl font-bold mb-6">Join m(ux)</h1>
-        <p class="mb-4">We are looking for DJs and volunteers. If you're interested in joining m(ux), please fill out the application form below:</p>
-        <form action="/submit" method="post" class="space-y-4">
-            <div>
-                <label for="name" class="block font-semibold">Name</label>
-                <input type="text" id="name" name="name" required class="input-field">
-            </div>
-            <div>
-                <label for="email" class="block font-semibold">Email</label>
-                <input type="email" id="email" name="email" required class="input-field">
-            </div>
-            <div>
-                <label for="message" class="block font-semibold">Message</label>
-                <textarea id="message" name="message" rows="4" class="input-field"></textarea>
-            </div>
-            <button type="submit" class="submit-button">Submit</button>
-        </form>
-        
+/* Hover Effect for Cards */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border-color: #9fedc9;
+}
+
+/* Card Title Styling */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #ff4d9a;
+}
+
+/* Card Content Styling */
+.card-content {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-content li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 100%; /* Full width for smaller screens */
+        max-width: none;
+    }
+}
+
+.form-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1.3rem;
+    width: 90%;
+    max-width: 650px;
+    text-align: center;
+}
+.mb-4
+{  text-align:center;}
+
+</style>
+
+<div class="form-overlay">
+    <h1 class="text-4xl font-bold mb-6">Join m(ux)</h1>
+    <p class="mb-4">We are looking for DJs, artists, and volunteers.<br> Select a category to begin your application:</p>
+
+    <!-- Selection Cards -->
+    <div class="card-container">
+        <a href="{{ url_for('form_page', category='dj') }}" class="card">
+            <h2 class="card-title">DJ / Musical Artist</h2>
+            <ul class="card-content">
+                <li>- DJ (digital)</li>
+                <li>- DJ (vinyl)</li>
+                <li>- Digital Performance</li>
+                <li>- Acoustic Performance</li>
+                <li>- Music Producer</li>
+            </ul>
+        </a>
+
+        <a href="{{ url_for('form_page', category='artist') }}" class="card">
+            <h2 class="card-title">Visual Artist / Vendor</h2>
+            <ul class="card-content">
+                <li>- VJ</li>
+                <li>- Art Vendor</li>
+                <li>- Jewelry Vendor</li>
+                <li>- Merch Vendor</li>
+                <li>- Art Installations</li>
+                <li>- Visual Performance</li>
+            </ul>
+        </a>
+
+        <a href="{{ url_for('form_page', category='staff') }}" class="card">
+            <h2 class="card-title">Production / Staff</h2>
+            <ul class="card-content">
+                <li>- Event Staff</li>
+                <li>- Photographer</li>
+                <li>- Videographer</li>
+                <li>- Visuals</li>
+                <li>- Social Media</li>
+                <li>- Set Designer</li>
+            </ul>
+        </a>
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Live - m(ux){% endblock %}
+
+{% block content %}
+
+<div class="svg-overlay-container">
+    <img src="{{ url_for('static', filename='assets/pagetemplate.svg') }}" alt="m(ux) logo" class="responsive-logo">
+    <img src="{{ url_for('static', filename='assets/arrowsv.svg') }}" alt="Arrows" class="overlay-arrows">
+
+    <div class="svg-overlay-container">
+        <!-- Heading at the Top -->
+        <h1 class="text-4xl font-bold mb-6 profile-heading">Leave a Message</h1>
+    
+        <div class="form-overlay">
+            <form action="/live-submit" method="post" class="flex flex-wrap space-y-4 md:flex-nowrap md:space-x-8">
+                <!-- Left Section: Canvas -->
+                <div class="w-full md:w-1/2 flex flex-col items-center space-y-4">
+                    <label for="avatar" class="block font-semibold">Draw Your Avatar</label>
+                    <canvas id="drawingCanvas" width="300" height="300" class="border-2 border-gray-300"></canvas>
+                    <!-- Button Controls -->
+                    <div class="flex space-x-4 mt-2">
+                        <button type="button" id="undoCanvas" class="undo-button">Undo</button>
+                        <button type="button" id="clearCanvas" class="clear-button">Clear Canvas</button>
+                    </div>
+                    <input type="hidden" id="avatarData" name="avatar">
+                    <!-- Brush Color Selection -->
+                    <div class="flex space-x-4 mt-4">
+                        <div class="color-circle" data-color="#ff4d9a" title="Violet Red"></div>
+                        <div class="color-circle" data-color="#f8f851" title="Lemon Yellow"></div>
+                        <div class="color-circle" data-color="#b0cbdf" title="Light Steel Blue"></div>
+                        <div class="color-circle" data-color="#9fedc9" title="Magic Mint"></div>
+                        <div class="color-circle" data-color="#000000" title="Black"></div> <!-- Black color circle -->
+                    </div>
+                </div>
+    
+                <!-- Right Section: Form Fields -->
+                <div class="w-full md:w-1/2 space-y-4">
+                    <div>
+                        <label for="username" class="block font-semibold">Username</label>
+                        <input type="text" id="username" name="username" required class="input-field w-full">
+                    </div>
+                    <div>
+                        <label for="message" class="block font-semibold">Message</label>
+    <textarea 
+        id="message" 
+        name="message" 
+        class="input-field w-full message-box" 
+        maxlength="100" 
+        style="resize: none; height:155px;" 
+
+        placeholder="Enter your message here. Max 100 characters"></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+const canvas = document.getElementById('drawingCanvas');
+const ctx = canvas.getContext('2d');
+const clearBtn = document.getElementById('clearCanvas');
+const undoBtn = document.getElementById('undoCanvas');
+const avatarInput = document.getElementById('avatarData');
+const colorCircles = document.querySelectorAll('.color-circle');
+
+let drawing = false;
+let lastX = 0;
+let lastY = 0;
+let currentColor = 'black'; // Default color
+const canvasHistory = []; // Store canvas states for undo
+
+// Adjust mouse coordinates to match canvas scaling and position
+function getMousePos(event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+        x: (event.clientX - rect.left) * scaleX,
+        y: (event.clientY - rect.top) * scaleY,
+    };
+}
+
+// Save the current canvas state
+function saveCanvasState() {
+    if (canvasHistory.length >= 20) {
+        // Limit history to 20 states for performance
+        canvasHistory.shift();
+    }
+    canvasHistory.push(canvas.toDataURL());
+}
+
+// Start drawing
+canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    saveCanvasState(); // Save state before starting to draw
+    const pos = getMousePos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+});
+
+// Stop drawing
+canvas.addEventListener('mouseup', () => {
+    drawing = false;
+    ctx.beginPath();
+});
+
+// Draw lines
+canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+
+    const pos = getMousePos(e);
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = 6; // Brush thickness
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    lastX = pos.x;
+    lastY = pos.y;
+});
+
+// Undo the last action
+undoBtn.addEventListener('click', () => {
+    if (canvasHistory.length > 0) {
+        const lastState = canvasHistory.pop();
+        const img = new Image();
+        img.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            ctx.drawImage(img, 0, 0); // Restore previous state
+        };
+        img.src = lastState;
+    }
+});
+
+// Clear the canvas
+clearBtn.addEventListener('click', () => {
+    saveCanvasState(); // Save state before clearing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Change brush color
+colorCircles.forEach(circle => {
+    circle.addEventListener('click', (e) => {
+        currentColor = e.target.dataset.color;
+    });
+});
+
+// Save canvas content as base64 image data
+document.querySelector('form').addEventListener('submit', (e) => {
+    avatarInput.value = canvas.toDataURL('image/png');
+});
+
+// Stop drawing when the cursor leaves the canvas
+canvas.addEventListener('mouseleave', () => {
+    drawing = false;
+    ctx.beginPath(); // Reset the path to prevent unintended lines
+});
+
+// Stop drawing when the mouse button is released, even outside the canvas
+document.addEventListener('mouseup', () => {
+    drawing = false;
+    ctx.beginPath(); // Reset the path
+});
+
+</script>
+
+<style>
+.color-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+.color-circle:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.color-circle[data-color="#ff4d9a"] {
+    background-color: #ff4d9a;
+}
+
+.color-circle[data-color="#f8f851"] {
+    background-color: #f8f851;
+}
+
+.color-circle[data-color="#b0cbdf"] {
+    background-color: #b0cbdf;
+}
+
+.color-circle[data-color="#9fedc9"] {
+    background-color: #9fedc9;
+}
+
+.color-circle[data-color="#000000"] {
+    background-color: #000000;
+    border: 2px solid #fff; /* Add border for visibility */
+}
+
+.undo-button,
+.clear-button {
+    padding: 8px 16px;
+    background-color: #b0cbdf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.undo-button:hover,
+.clear-button:hover {
+    background-color: #9fedc9;
+}
+</style>
+{% endblock %}

@@ -44,12 +44,13 @@ a:hover {
 /* Horizontal Rotated Links */
 .vertical-links {
     position: absolute;
-    top:  calc(50% - 48px);
+    top:  calc(50% + 155px);
     left: calc(50% + 365px);
     transform: translateY(-150%);
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    z-index:0;
 }
 
 /* Styling for individual links */
@@ -243,4 +244,129 @@ a:hover {
         margin: 0vh auto 0;
     }
 
+}
+
+canvas {
+    width: 300px; /* Display size */
+    height: 300px; /* Display size */
+    border: 2px solid #ccc;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+form label {
+    display: block;
+    text-align: center; /* Center-align all headings inside the form */
+    margin-bottom: 0.5rem; /* Add space below the label */
+    font-weight: bold; /* Ensure consistent bold font */
+}
+
+
+form > div {
+    flex: 1 1 100%; /* Full width on smaller screens */
+    max-width: 100%;
+}
+
+@media (min-width: 815px) {
+    form > div {
+        flex: 0 0 48%; /* Split evenly on medium+ screens */
+    }
+}
+
+canvas {
+    width: 100%; /* Responsive canvas */
+    max-width: 300px; /* Restrict to a square ratio */
+    height: auto; /* Maintain aspect ratio */
+    border: 2px solid #ccc;
+    display: block;
+    margin: 0 auto;
+}
+
+button.clear-button {
+    display: block;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    background-color: #ff4d9a;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.clear-button:hover {
+    background-color: #9fedc9;
+}
+
+input.input-field,
+textarea.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button.submit-button {
+    padding: 0.5rem 1rem;
+    background-color: #ff4d9a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.submit-button:hover {
+    background-color:#9fedc9;
+}
+
+.profile-heading {
+    position: relative;
+    top: -250px; /* Move the heading 40px upward */
+    text-align: center;
+    margin: 0 auto;
+    font-size: 2.5rem; /* Adjust the font size if needed */
+}
+
+.message-box {
+    width: 100%; /* Full width of its container */
+    height: 145px; /* Adjust height in pixels */
+    padding: 10px; /* Add padding for better usability */
+    font-size: 1rem; /* Adjust font size */
+    border: 1px solid #ccc; /* Optional: Border styling */
+    border-radius: 4px; /* Optional: Rounded corners */
+    box-sizing: border-box; /* Includes padding in width/height */
+}
+
+.flash-message {
+    animation: fadeOut 5s forwards; /* Fade out over 5 seconds */
+}
+
+.flash-message {
+    position: fixed; /* Keep the message fixed on the screen */
+    top: 10px; /* Distance from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for horizontal centering */
+    background-color: #ff4d9a; /* Background color for the message */
+    color: white; /* Text color */
+    padding: 1rem 2rem; /* Add padding for better visibility */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 1000; /* Ensure it's above other elements */
+    font-size: 1rem; /* Adjust font size */
+    text-align: center; /* Center-align the text */
+}
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1; /* Fully visible */
+    }
+    100% {
+        opacity: 0; /* Fully transparent */
+    }
 }

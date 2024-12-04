@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responses Display</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background-color: rgba(0,0,0,0); /* Default value */
+        }
+
+        .window {
+            position: absolute;
+            width: 450px; /* Wider */
+            height: 170px; /* Smaller height */
+            border: 3px solid #FF4D9A; /* Default value */
+            background: white;
+            overflow: hidden;
+            border-radius:10px;
+        }
+    
+        .header {
+            background-color: #FF4D9A; /* Default value */
+    height: 30px; /* Scaled-down height */
+    display: flex;
+    align-items: center;
+    padding: 0 5px; /* Reduced padding */
+    color: #9fedc9;
+    font-weight: bold;
+    font-size: 14px; /* Scaled-down font size */
+    position: relative;
+    justify-content: space-between; /* Space between circles and name */
+}
+
+
+
+.header .header-name {
+    flex: 1;
+    text-align: left; /* Align text to match the body */
+    padding-left: 10px; /* Add consistent padding */
+    color: #9fedc9; /* White text for the name */
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header-prefix {
+    color: #ffffff; /* Green color for "Message from:" */
+    font-weight: bold; /* Optional: make it bold */
+}
+        /* Header circles */
+        .header .circle {
+            width: 20px; /* Reduced size */
+            height: 20px;
+            border-radius: 50%;
+            background-color: #F8F851; /* Yellow color */
+            margin-right: 4px;
+            margin-top: -2px; /* Move circles up by 2 pixels */
+        }
+    
+        .header .circle:nth-child(2) {
+            margin-left: 4px; /* Adjust spacing */
+        }
+    
+        .header .circle:nth-child(3) {
+            margin-left: 4px;
+        }
+    
+        .content {
+            
+            display: flex;
+            gap: 2px; /* Adjust gap */
+        }
+    
+        .avatar {
+    width: 135px; /* Keep the size */
+    height: 135px;
+    background-size: cover;
+    background-position: center;
+
+}
+    
+.text {
+    flex: 1;
+    font-size: 1.2vw; /* Scaled-down text */
+    color: #FF4D9A;
+    padding: 5px 10px; /* Match left padding with the header */
+    margin: 0; /* Remove default margins */
+    line-height: 1.4; /* Adjust line spacing for readability */
+}
+
+    
+       
+
+    </style>
+    
+</head>
+<body>
+    <script>
+        const windowsContainer = document.createElement('div');
+        document.body.appendChild(windowsContainer);
+
+        const windows = new Map();
+
+        function makeDraggable(element) {
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            element.querySelector('.header').addEventListener('mousedown', (e) => {
+                isDragging = true;
+                offsetX = e.clientX - element.getBoundingClientRect().left;
+                offsetY = e.clientY - element.getBoundingClientRect().top;
+                element.style.zIndex = 1000; // Bring the dragged window to the front
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const newLeft = e.clientX - offsetX;
+                    const newTop = e.clientY - offsetY;
+
+                    // Ensure the window stays within the viewport
+                    const rect = element.getBoundingClientRect();
+                    element.style.left = `${Math.min(
+                        Math.max(0, newLeft),
+                        window.innerWidth - rect.width
+                    )}px`;
+                    element.style.top = `${Math.min(
+                        Math.max(0, newTop),
+                        window.innerHeight - rect.height
+                    )}px`;
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                element.style.zIndex = ''; // Reset z-index
+            });
+        }
+
+        function syncResponses() {
+    fetch('/get-responses')
+        .then((response) => response.json())
+        .then((data) => {
+            const responses = data.responses;
+            const existingNames = new Set();
+
+            // Process current database responses
+            responses.forEach((response) => {
+                existingNames.add(response.name);
+
+                if (!windows.has(response.name)) {
+                    const windowDiv = document.createElement('div');
+                    windowDiv.classList.add('window');
+                    const top = Math.random() * (window.innerHeight - 300);
+                    const left = Math.random() * (window.innerWidth - 400);
+                    windowDiv.style.top = `${top}px`;
+                    windowDiv.style.left = `${left}px`;
+
+                    windowDiv.style.opacity = '0'; // Initially invisible
+                    windowDiv.style.transition = 'opacity 1s ease-in-out';
+
+                      // Randomly assign one of four themes
+                      const themeChoice = Math.floor(Math.random() * 4); // Random number: 0, 1, 2, or 3
+
+let borderColor, headerBgColor, headerNameColor, headerPrefixColor, circleColor;
+
+if (themeChoice === 0) {
+    // Theme 1 (Pink)
+    borderColor = '#FF4D9A';
+    headerBgColor = '#FF4D9A';
+    headerNameColor = '#ffffff';
+    headerPrefixColor = '#ffffff';
+    circleColor = '#F8F851';
+} else if (themeChoice === 1) {
+    // Theme 2 (Mint)
+    borderColor = '#9fedc9';
+    headerBgColor = '#9fedc9';
+    headerNameColor = '#FF4D9A';
+    headerPrefixColor = '#FF4D9A';
+    circleColor = '#ffffff';
+} else if (themeChoice === 2) {
+    // Theme 3 (Yellow Theme)
+    borderColor = '#f8f851';
+    headerBgColor = '#f8f851';
+    headerNameColor = '#ff4d9a';
+    headerPrefixColor = '#ff4d9a';
+    circleColor = '#ffffff';
+} else if (themeChoice === 3) {
+    // Theme 4 (Blue Theme)
+    borderColor = '#b0cbdf';
+    headerBgColor = '#b0cbdf';
+    headerNameColor = '#ffffff';
+    headerPrefixColor = '#ffffff';
+    circleColor = '#ffffff';
+}
+
+                    windowDiv.innerHTML = `
+                        <div class="header" style="background-color: ${headerBgColor};">
+                            <div class="circle" style="background-color: ${circleColor};"></div>
+                            <div class="circle" style="background-color: ${circleColor}; margin-left: 4px;"></div>
+                            <div class="circle" style="background-color: ${circleColor}; margin-left: 4px;"></div>
+                            <span class="header-name" style="color: ${headerNameColor};">
+                                <span class="header-prefix" style="color: ${headerPrefixColor};">New message from</span> ${response.name}
+                            </span>
+                        </div>
+                        <div class="content">
+                            <div class="avatar" style="background-image: url('${response.avatar}')"></div>
+                            <div class="text">
+                                <p style="font-weight: normal;">${response.message}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    // Apply border color to the window
+                    windowDiv.style.border = `3px solid ${borderColor}`;
+
+                    windowsContainer.appendChild(windowDiv);
+
+                    // Make the window draggable
+                    makeDraggable(windowDiv);
+
+                    setTimeout(() => {
+                        windowDiv.style.opacity = '1'; // Fade-in effect
+                    }, 100);
+
+                    // Store the window details
+                    const speedMultiplier = Math.random() * 1.5 + 0.5; // Speed range between 0.5 and 2.0
+                    windows.set(response.name, {
+                        element: windowDiv,
+                        dx: (Math.random() < 0.7 ? 0.4 : -1) * speedMultiplier,
+                        dy: (Math.random() < 0.8 ? 0.6 : -1) * speedMultiplier,
+                    });
+                }
+            });
+
+            // Handle windows no longer in the database
+            windows.forEach((win, name) => {
+                if (!existingNames.has(name)) {
+                    const windowDiv = win.element;
+                    windowDiv.style.opacity = '0'; // Start fade-out
+                    setTimeout(() => {
+                        windowsContainer.removeChild(windowDiv); // Remove from DOM
+                        windows.delete(name); // Remove from map
+                    }, 1000); // Allow fade-out transition to complete
+                }
+            });
+        })
+        .catch((error) => console.error('Error fetching responses:', error));
+
+    // Delete messages older than 1 minute
+    fetch('/delete-old-responses', { method: 'DELETE' })
+        .then((res) => {
+            if (!res.ok) {
+                console.error('Failed to delete old responses');
+            }
+        })
+        .catch((error) => console.error('Error deleting old responses:', error));
+}
+
+
+
+
+        function animateWindows() {
+            function update() {
+                windows.forEach((win) => {
+                    const rect = win.element.getBoundingClientRect();
+
+                    // Update position
+                    const nextLeft = rect.left + win.dx;
+                    const nextTop = rect.top + win.dy;
+
+                    // Check boundaries (window edges)
+                    if (nextLeft <= 0 || nextLeft + rect.width >= window.innerWidth) {
+                        win.dx *= -1;
+                    }
+                    if (nextTop <= 0 || nextTop + rect.height >= window.innerHeight) {
+                        win.dy *= -1;
+                    }
+
+                    // Apply new position
+                    win.element.style.left = `${rect.left + win.dx}px`;
+                    win.element.style.top = `${rect.top + win.dy}px`;
+                });
+
+                requestAnimationFrame(update);
+            }
+
+            update();
+        }
+
+        setInterval(syncResponses, 60000);
+        syncResponses();
+        animateWindows();
+    </script>
+</body>
+
+</html>
