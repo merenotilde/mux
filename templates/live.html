@@ -71,15 +71,25 @@ let lastY = 0;
 let currentColor = 'black'; // Default color
 const canvasHistory = []; // Store canvas states for undo
 
-// Adjust mouse coordinates to match canvas scaling and position
-function getMousePos(event) {
+// Adjust mouse/touch coordinates to match canvas scaling and position
+function getPointerPos(event) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-    return {
-        x: (event.clientX - rect.left) * scaleX,
-        y: (event.clientY - rect.top) * scaleY,
-    };
+
+    if (event.touches) {
+        // Handle touch events
+        return {
+            x: (event.touches[0].clientX - rect.left) * scaleX,
+            y: (event.touches[0].clientY - rect.top) * scaleY,
+        };
+    } else {
+        // Handle mouse events
+        return {
+            x: (event.clientX - rect.left) * scaleX,
+            y: (event.clientY - rect.top) * scaleY,
+        };
+    }
 }
 
 // Save the current canvas state
@@ -92,25 +102,27 @@ function saveCanvasState() {
 }
 
 // Start drawing
-canvas.addEventListener('mousedown', (e) => {
+function startDrawing(event) {
     drawing = true;
     saveCanvasState(); // Save state before starting to draw
-    const pos = getMousePos(e);
+    const pos = getPointerPos(event);
     lastX = pos.x;
     lastY = pos.y;
-});
+
+    event.preventDefault(); // Prevent scrolling on touch devices
+}
 
 // Stop drawing
-canvas.addEventListener('mouseup', () => {
+function stopDrawing() {
     drawing = false;
     ctx.beginPath();
-});
+}
 
 // Draw lines
-canvas.addEventListener('mousemove', (e) => {
+function draw(event) {
     if (!drawing) return;
 
-    const pos = getMousePos(e);
+    const pos = getPointerPos(event);
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
@@ -122,7 +134,9 @@ canvas.addEventListener('mousemove', (e) => {
 
     lastX = pos.x;
     lastY = pos.y;
-});
+
+    event.preventDefault(); // Prevent scrolling on touch devices
+}
 
 // Undo the last action
 undoBtn.addEventListener('click', () => {
@@ -155,11 +169,22 @@ document.querySelector('form').addEventListener('submit', (e) => {
     avatarInput.value = canvas.toDataURL('image/png');
 });
 
-// Stop drawing when the cursor leaves the canvas
-canvas.addEventListener('mouseleave', () => {
-    drawing = false;
-    ctx.beginPath(); // Reset the path to prevent unintended lines
+// Mouse events
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseleave', stopDrawing);
+
+// Touch events for mobile
+canvas.addEventListener('touchstart', (e) => {
+    startDrawing(e);
+    e.preventDefault(); // Prevent scrolling when touching the canvas
 });
+canvas.addEventListener('touchmove', (e) => {
+    draw(e);
+    e.preventDefault(); // Prevent scrolling when drawing
+});
+canvas.addEventListener('touchend', stopDrawing);
 
 // Stop drawing when the mouse button is released, even outside the canvas
 document.addEventListener('mouseup', () => {
@@ -167,6 +192,11 @@ document.addEventListener('mouseup', () => {
     ctx.beginPath(); // Reset the path
 });
 
+// Stop drawing when the cursor leaves the canvas (for touch)
+canvas.addEventListener('touchcancel', () => {
+    drawing = false;
+    ctx.beginPath(); // Reset the path
+});
 </script>
 
 <style>

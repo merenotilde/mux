@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = "mux"
 
 # Database connection configuration
 DB_HOST = os.getenv("DB_HOST")

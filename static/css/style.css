@@ -44,7 +44,7 @@ a:hover {
 /* Horizontal Rotated Links */
 .vertical-links {
     position: absolute;
-    top:  calc(50% + 155px);
+    top:  calc(50% + 185px);
     left: calc(50% + 365px);
     transform: translateY(-150%);
     display: flex;
@@ -243,6 +243,45 @@ a:hover {
         overflow-y: auto;
         margin: 0vh auto 0;
     }
+
+.mobile-nav ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        list-style: none;
+        padding: 0 1rem;
+        margin: 0;
+        overflow-x: auto; /* Allow horizontal scrolling */
+        white-space: nowrap; /* Prevent items from wrapping */
+        scrollbar-width: thin; /* Thin scrollbar for Firefox */
+        scrollbar-color: #ff4d9a #ffffff; /* Thumb and track colors */
+    }
+    
+    .mobile-nav ul::-webkit-scrollbar {
+        height: 8px; /* Height for horizontal scrollbar */
+    }
+    
+    .mobile-nav ul::-webkit-scrollbar-track {
+        background: #ffffff;
+        border-radius: 10px;
+    }
+    
+    .mobile-nav ul::-webkit-scrollbar-thumb {
+        background-color: #ff4d9a;
+        border-radius: 10px;
+        border: 2px solid #ffffff;
+    }
+    
+    .mobile-nav ul::-webkit-scrollbar-thumb:hover {
+        background-color: #9fedc9;
+    }
+    
+    .mobile-nav li {
+        flex-shrink: 0; /* Prevent items from shrinking */
+    }
+    
+
 
 }
 
