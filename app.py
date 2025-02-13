@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
-app.secret_key = "mux"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 # Database connection configuration
 DB_HOST = os.getenv("DB_HOST")
