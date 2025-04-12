@@ -14,7 +14,7 @@ body {
     font-family: 'HelveticaNowDisplay', sans-serif;
     display: flex;
     flex-direction: column;
-    background-color: #f8f851;
+    background-color: #9fedc9;
     color: #ff4d9a;
 }
 
@@ -44,7 +44,7 @@ a:hover {
 /* Horizontal Rotated Links */
 .vertical-links {
     position: absolute;
-    top:  calc(50% + 185px);
+    top:  calc(50% + 155px);
     left: calc(50% + 365px);
     transform: translateY(-150%);
     display: flex;
@@ -55,11 +55,11 @@ a:hover {
 
 /* Styling for individual links */
 .vertical-links a {
-    font-size: 1.2rem; 
+    font-size: 1.2rem;
     color: #ff4d9a;
     text-decoration: none;
     transition: color 0.2s;
-    writing-mode: vertical-rl; 
+    writing-mode: vertical-rl;
     transform: rotate(0deg);
 }
 
@@ -131,7 +131,7 @@ a:hover {
     top: calc(50% + 450px);
     left: calc(50% + 330px);
     transform: translate(-50%, -150%);
-    z-index: 1; 
+    z-index: 1;
 }
 
 .mobile-nav {
@@ -144,7 +144,7 @@ a:hover {
     height: 850px;
     display: block;
     margin: 0 auto;
-    
+
 }
  /* Mobile View */
 @media (max-width: 815px), (max-height: 850px) {
@@ -152,7 +152,7 @@ a:hover {
     .vertical-links,
     .overlay-arrows
       {
-        display: none; 
+        display: none;
     }
 
     /* Custom Scrollbar Styling */
@@ -170,22 +170,22 @@ a:hover {
 
     ::-webkit-scrollbar-track {
         background: #ffffff;
-        border-radius: 10px; 
+        border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #ff4d9a; 
-        border-radius: 10px; 
-        border: 2px solid #ffffff; 
+        background-color: #ff4d9a;
+        border-radius: 10px;
+        border: 2px solid #ffffff;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background-color: #9fedc9; 
+        background-color: #9fedc9;
     }
 
 
     .mobile-nav {
-        display: flex; 
+        display: flex;
         align-items: center;
         justify-content: space-between;
         position: fixed;
@@ -206,7 +206,7 @@ a:hover {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 1rem; 
+        gap: 1rem;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -231,7 +231,7 @@ a:hover {
         max-height: 70vh;
         overflow-y: auto;
         margin: -5px auto 0;
-      
+
     }
 
     .form-overlay {
@@ -243,45 +243,6 @@ a:hover {
         overflow-y: auto;
         margin: 0vh auto 0;
     }
-
-.mobile-nav ul {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-        list-style: none;
-        padding: 0 1rem;
-        margin: 0;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        white-space: nowrap; /* Prevent items from wrapping */
-        scrollbar-width: thin; /* Thin scrollbar for Firefox */
-        scrollbar-color: #ff4d9a #ffffff; /* Thumb and track colors */
-    }
-    
-    .mobile-nav ul::-webkit-scrollbar {
-        height: 8px; /* Height for horizontal scrollbar */
-    }
-    
-    .mobile-nav ul::-webkit-scrollbar-track {
-        background: #ffffff;
-        border-radius: 10px;
-    }
-    
-    .mobile-nav ul::-webkit-scrollbar-thumb {
-        background-color: #ff4d9a;
-        border-radius: 10px;
-        border: 2px solid #ffffff;
-    }
-    
-    .mobile-nav ul::-webkit-scrollbar-thumb:hover {
-        background-color: #9fedc9;
-    }
-    
-    .mobile-nav li {
-        flex-shrink: 0; /* Prevent items from shrinking */
-    }
-    
-
 
 }
 
@@ -311,7 +272,7 @@ form > div {
     max-width: 100%;
 }
 
-@media (min-width: 815px) {
+@media (min-width: 768px) {
     form > div {
         flex: 0 0 48%; /* Split evenly on medium+ screens */
     }
@@ -321,7 +282,7 @@ canvas {
     width: 100%; /* Responsive canvas */
     max-width: 300px; /* Restrict to a square ratio */
     height: auto; /* Maintain aspect ratio */
-    border: 2px solid #ccc;
+    border: 5px solid #9fedc9;
     display: block;
     margin: 0 auto;
 }
@@ -345,7 +306,7 @@ input.input-field,
 textarea.input-field {
     width: 100%;
     padding: 0.5rem;
-    border: 2px solid #ccc;
+    border: 2px solid #9fedc9;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -376,13 +337,9 @@ button.submit-button:hover {
     height: 145px; /* Adjust height in pixels */
     padding: 10px; /* Add padding for better usability */
     font-size: 1rem; /* Adjust font size */
-    border: 1px solid #ccc; /* Optional: Border styling */
+    border: 1px solid #9fedc9; /* Optional: Border styling */
     border-radius: 4px; /* Optional: Rounded corners */
     box-sizing: border-box; /* Includes padding in width/height */
-}
-
-.flash-message {
-    animation: fadeOut 5s forwards; /* Fade out over 5 seconds */
 }
 
 .flash-message {
@@ -398,14 +355,4 @@ button.submit-button:hover {
     z-index: 1000; /* Ensure it's above other elements */
     font-size: 1rem; /* Adjust font size */
     text-align: center; /* Center-align the text */
-}
-
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1; /* Fully visible */
-    }
-    100% {
-        opacity: 0; /* Fully transparent */
-    }
 }
