@@ -10,11 +10,11 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 # Database connection configuration
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = "52.91.34.166"
+DB_PORT = "5432"
+DB_NAME = "mux"
+DB_USER = "postgres"
+DB_PASSWORD = "9545"
 
 # Configure SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = (
@@ -97,9 +97,9 @@ admin = Admin(app, name='Mux Admin', template_mode='bootstrap4')
 admin.add_view(ModelView(Application, db.session))
 admin.add_view(ModelView(Response, db.session))
 
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('home.html')
+    return redirect("https://posh.vip/e/mux-333", code=302)
 
 @app.route('/about')
 def about():
